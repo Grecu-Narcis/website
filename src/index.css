@@ -1,0 +1,248 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   FlorinFinance — Design System
+   --------------------------------------------------------------------------
+   Tailwind v4 is configured CSS-first: every token below becomes a real
+   utility (e.g. `--color-brand-600` -> `bg-brand-600`, `text-brand-600`).
+
+   Palette rationale ("florin" = the historic gold coin):
+     • brand  — deep harbour teal. Calm, institutional, trustworthy. The
+                anchor colour for surfaces, nav and footer.
+     • gold   — warm florin gold. Used sparingly for CTAs, highlights and
+                anything that should read as "value".
+     • ink    — teal-tinted neutrals for text, borders and soft surfaces.
+   ========================================================================== */
+
+@theme {
+  /* ---------- Typography ---------- */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Sora', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type: scales with the viewport, no media queries required. */
+  --text-display: clamp(2.5rem, 6.2vw, 4.5rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 700;
+
+  --text-h2: clamp(1.875rem, 3.8vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.025em;
+
+  --text-h3: clamp(1.25rem, 2vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.015em;
+
+  --text-lead: clamp(1.0625rem, 1.35vw, 1.25rem);
+  --text-lead--line-height: 1.65;
+
+  /* ---------- Brand: harbour teal ---------- */
+  --color-brand-50: #f0faf9;
+  --color-brand-100: #d6f2ef;
+  --color-brand-200: #ade5e0;
+  --color-brand-300: #79d0cb;
+  --color-brand-400: #43b2af;
+  --color-brand-500: #22938f;
+  --color-brand-600: #157674;
+  --color-brand-700: #145e5e;
+  --color-brand-800: #144b4c;
+  --color-brand-900: #123e40;
+  --color-brand-950: #0c2b2e;
+
+  /* ---------- Accent: florin gold ---------- */
+  --color-gold-50: #fffaeb;
+  --color-gold-100: #fdf0c8;
+  --color-gold-200: #fbde8b;
+  --color-gold-300: #f9c74f;
+  --color-gold-400: #fab024;
+  --color-gold-500: #e8930b;
+  --color-gold-600: #c06d06;
+  --color-gold-700: #9a4e09;
+  --color-gold-800: #7e3e0e;
+  --color-gold-900: #6a340f;
+
+  /* ---------- Neutrals: teal-tinted ink ---------- */
+  --color-ink-50: #f7f9f9;
+  --color-ink-100: #eef2f2;
+  --color-ink-200: #dce3e3;
+  --color-ink-300: #bcc8c9;
+  --color-ink-400: #8b9c9e;
+  --color-ink-500: #63767a;
+  --color-ink-600: #4a5c60;
+  --color-ink-700: #3c4a4d;
+  --color-ink-800: #2c3739;
+  --color-ink-900: #1b2325;
+  --color-ink-950: #0f1618;
+
+  /* ---------- Elevation ---------- */
+  --shadow-soft: 0 1px 2px rgb(12 43 46 / 0.04), 0 8px 24px -12px rgb(12 43 46 / 0.12);
+  --shadow-card: 0 1px 2px rgb(12 43 46 / 0.05), 0 18px 40px -20px rgb(12 43 46 / 0.22);
+  --shadow-lift: 0 2px 4px rgb(12 43 46 / 0.06), 0 30px 60px -24px rgb(12 43 46 / 0.32);
+  --shadow-glow: 0 18px 40px -16px rgb(250 176 36 / 0.55);
+
+  /* ---------- Motion ---------- */
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The track renders its children twice, so -50% loops seamlessly. */
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(250 176 36 / 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgb(250 176 36 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(250 176 36 / 0);
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    /* Belt-and-braces against horizontal overflow on small screens. */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink-700 antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-brand-950;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One consistent, visible focus treatment for keyboard users everywhere. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold-500;
+  }
+
+  /* Anchor scrolling clears the sticky header. */
+  :target {
+    scroll-margin-top: 6.5rem;
+  }
+
+  ::selection {
+    @apply bg-gold-200 text-brand-950;
+  }
+}
+
+/* ==========================================================================
+   Reusable composition classes
+   ========================================================================== */
+@layer components {
+  /* Single source of truth for page gutters + max width. */
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Vertical rhythm shared by every section, so spacing stays consistent. */
+  .section {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+  /* Small uppercase section eyebrow. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold tracking-[0.14em] text-brand-700 uppercase;
+  }
+
+  /* Surface used by most cards. */
+  .card {
+    @apply rounded-2xl border border-ink-200/80 bg-white shadow-soft transition duration-300;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-brand-200 hover:shadow-card;
+  }
+
+  /* Native range inputs, restyled to the brand. */
+  .range-brand {
+    @apply h-2 w-full cursor-pointer appearance-none rounded-full bg-ink-200;
+    accent-color: var(--color-gold-400);
+  }
+
+  .range-brand::-webkit-slider-thumb {
+    @apply h-6 w-6 appearance-none rounded-full border-[3px] border-white bg-brand-700 shadow-md transition;
+  }
+
+  .range-brand:hover::-webkit-slider-thumb {
+    @apply scale-110 bg-brand-600;
+  }
+
+  .range-brand::-moz-range-thumb {
+    @apply h-5 w-5 rounded-full border-[3px] border-white bg-brand-700 shadow-md;
+  }
+}
+
+/* ==========================================================================
+   Scroll-reveal (driven by the `useReveal` hook)
+   ========================================================================== */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Fade the marquee edges instead of hard-cutting the logos. */
+  .mask-edges {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+}
+
+/* Respect the OS "reduce motion" preference: kill transforms, keep opacity. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
